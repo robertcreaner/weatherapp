@@ -1,0 +1,125 @@
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8" />
+    <title>Creaner Forecast</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/weather-icons.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/weather.css">
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <script src="https://code.angularjs.org/1.4.3/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  </head>
+
+  <body ng-controller="mainCtrl" ngCloak>
+
+      <nav class="navbar">
+          <div class="container-fluid navMain">
+              <div class="navbar-left">
+                  <h1>Aimsir na hÉireann</h1>
+              </div>  
+              <div class="navbar-right">
+                <form id="radioBtns">
+                  <label class="btn timeBtn" for="morn">Morning</label>
+                  <input ng-click="fetch()" ng-model="weatherTime" id="morn" type="radio" name="time" value="morning">
+                  <label class="btn timeBtn" for="eve">Evening</label>
+                  <input ng-click="fetch()" ng-model="weatherTime" id="eve"  type="radio" name="time" value="evening" class="">
+                  <label class="btn timeBtn" for="night">Night</label>
+                  <input ng-click="fetch()" ng-model="weatherTime" id="night"  type="radio" name="time" value="night" class="btn">
+                </form>
+              </div>
+          </div>
+      </nav>
+
+      <div class="choose">
+        <span>Choose a county </span>
+        <select ng-change="fetch()" ng-model="city">
+           <option value="lat=54.718545&lon=-6.210083">Antrim</option>
+           <option value="lat=54.350917&lon=-6.652504">Armagh</option>
+           <option value="lat=52.836056&lon=-6.934228">Carlow</option>
+           <option value="lat=53.986221&lon=-7.336089">Cavan</option> 
+           <option value="lat=52.845358&lon=-9.254262">Clare</option>
+           <option value="lat=51.897891&lon=-8.478502">Cork</option>
+           <option value="lat=54.907218&lon=-7.900272">Donegal</option>
+           <option value="lat=54.333413&lon=-5.793839">Down</option>
+           <option value="lat=53.347733&lon=-6.259362">Dublin</option>
+           <option value="lat=54.346021&lon=-7.701234">Fermanagh</option>
+           <option value="lat=53.286602&lon=-9.042198">Galway</option>
+           <option value="lat=52.066208&lon=-9.528265">Kerry</option> 
+           <option value="lat=53.161327&lon=-6.877748">Kildare</option>
+           <option value="lat=52.654456&lon=-7.248242">Kilkenny</option>
+           <option value="lat=53.028350&lon=-7.299972">Laois</option>
+           <option value="lat=54.301057&lon=-8.198295">Leitrim</option>
+           <option value="lat=52.668362&lon=-8.630142">Limerick</option>
+           <option value="lat=53.727774&lon=-7.792685">Longford</option>
+           <option value="lat=53.855559&lon=-6.532933">Louth</option>
+           <option value="lat=54.350917&lon=-6.652504">Mayo</option> 
+           <option value="lat=53.633803&lon=-6.700035">Meath</option>
+           <option value="lat=54.248829&lon=-6.968087">Monaghan</option>
+           <option value="lat=53.260979&lon=-7.599808">Offaly</option>
+           <option value="lat=54.350917&lon=-6.652504">Roscommon</option>
+           <option value="lat=53.797678&lon=-8.277382">Sligo</option>
+           <option value="lat=52.646464&lon=-7.921517">Tipperary</option>
+           <option value="lat=54.626172&lon=-6.937151">Tyrone</option> 
+           <option value="lat=52.256222&lon=-7.112344">Waterford</option>
+           <option value="lat=53.515738&lon=-7.403572">Westmeath</option>
+           <option value="lat=52.335263&lon=-6.461705">Wexford</option>
+           <option value="lat=52.980748&lon=-6.047214">Wicklow</option>
+        </select> 
+        <!--div id="left" ng-click="scrollLeft()">
+            <img src="img/left.png"/>
+          </div>
+          <div id="right" ng-click="scrollRight()">
+            <img src="img/right.png"/>
+          </div-->
+      </div>
+
+      <div id="weatherApp" ng-click="pageScroll()">
+          <div class="weatherSlider">
+            <div id="weather" ng-repeat="item in mainWeather">
+                <div class="day">
+                  <i class="weather-icon" ng-class="item.icon"></i>
+                  <p class="weatherDay">{{item.day}}</p>
+                  <!--p class="weatherMain weatherTime">{{item.date2}} ({{item.time}})</p-->
+                  <p class="weatherMain">{{item.date2}}</p>
+                  <p class="weatherMain">{{item.main}}</p>
+                  <p class="weatherUnit">{{item.temper | number:1}}°</p>
+                </div>
+            </div>
+          </div>
+          <div class="clear"></div>
+          
+      </div>
+      <!--div class="hideScroll"></div-->
+
+<!--     <h1>Hide/Show</h1>
+    <input ng-model="inputNum" ng-change="showOutput()" placeholder="Enter a number" />
+    <div ng-repeat="value in values">
+      <span ng-show="value.display">{{value}}</span>
+    </div>
+    <hr></hr> -->
+    
+<!-- 
+    <h1>Image Gallery</h1>
+    <div class="photos" ng-repeat="photo in photos">
+        <img class="img" ng-src="{{photo.url}}"/>
+        <p class="author">by {{ photo.author }}</p>
+    </div>   --> 
+    
+
+    <!-- Modules -->
+    <script src="js/MyApp.js"></script>
+
+    <!-- Controllers -->
+    <script src="js/controllers/MainController.js"></script>
+
+    <!-- Services -->
+    <script src="js/services/photos.js"></script>
+    <script src="js/services/weather.js"></script>
+
+  </body>
+</html>

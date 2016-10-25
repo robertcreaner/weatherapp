@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Exercise 1</title>
+	<script>
+
+		function greet(){
+			var d = new Date();
+			var time = d.getHours();
+			console.log(d);
+			var username = document.getElementById("name").value;
+			if(time>0&&time<13){
+				document.getElementById("output").innerHTML = "Good morning " + username;
+			} else if (time>12&&time<18){
+				document.getElementById("output").innerHTML = "Good afternoon " + username;
+			} else {
+				document.getElementById("output").innerHTML = "Good evening " + username;
+			}
+		}
+
+		calculate = function(){
+			var operator = document.getElementById("operator").value;
+			var input1 = parseInt(document.getElementById("input1").value);
+			var input2 = parseInt(document.getElementById("input2").value);
+			var result;
+
+			if(operator=="+"){
+				result = input1 + input2;
+			} else if(operator=="-"){
+				result = input1 - input2;
+			} else if(operator=="*"){
+				result = input1 * input2;
+			} else {
+				result = input1 / input2;
+			}
+			document.getElementById("output2").innerHTML = Math.round(result * 100) / 100;
+		}
+	</script>
+</head>
+<body>
+	<input id="name" onkeyup="greet()" placeholder="Enter name"/>
+	<!-- <button onkeydown="greet()">Greet</button> -->
+	<div id="output"></div>
+	<hr/>
+
+	<div style="float:left;">
+		<input id="input1"/>
+		<select onchange="calculate()" id="operator">
+			<option>+</option>
+			<option>-</option>
+			<option>*</option>
+			<option>/</option>
+		</select>
+		<input id="input2"/> = 
+		
+	</div>
+	<div style="float:left;" id="output2"> </div>
+</body>
+</html>
